@@ -3,3 +3,4 @@
 package.json
 pnpm-lock.yaml
 .versionrc.json
+CHANGELOG.md
