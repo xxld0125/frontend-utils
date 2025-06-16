@@ -1,0 +1,6 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": ["typeof", "eslintignore", "editorconfig", "commitlint"],
+  "ignorePaths": ["package.json", "node_modules/**", ".eslintrc.js", "cspell.json"]
+}
