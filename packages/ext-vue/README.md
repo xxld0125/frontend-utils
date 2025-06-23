@@ -142,7 +142,7 @@ graph TB
 
 ## 流程图
 
-![流程图](./assets/image.png)
+![流程图](./assets/workflow-diagram.png)
 
 ## 扩展点埋点原则
 
@@ -467,7 +467,7 @@ function CdnComponent({ url, comProps }) {
 
 #### 架构图
 
-![架构图](./cdnComponent.svg)
+![架构图](./assets/cdn-component.svg)
 
 ### Angular场景--跨技术栈
 
@@ -520,7 +520,7 @@ magic(
 <cdn-component url="xxx" />
 ```
 
-###JS沙箱和CSS隔离
+### JS沙箱和CSS隔离
 
 #### 重点 + 难点
 
@@ -549,7 +549,7 @@ export default function extractHtml(app, componentMode) {
 
 #### 改造后架构
 
-![架构图](./assets/image2.png)
+![改造后架构图](./assets/micro-app-architecture.png)
 
 默认不开启沙箱
 
@@ -557,7 +557,7 @@ export default function extractHtml(app, componentMode) {
 
 #### 运行流程
 
-![架构图](./assets/image3.png)
+![运行流程图](./assets/business-flow-diagram.png)
 
 ```js
 const checker = (conditions) => conditions.orgcode == store.state.orgcode
@@ -585,4 +585,26 @@ const checker = (conditions) => conditions.orgcode == store.state.orgcode
 
 #### 架构总览
 
-![架构图](./assets/image4.png)
+![架构总览图](./assets/business-architecture-overview.png)
+
+## 最终方案
+
+### 基础功能(仅支持Vue)
+
+- 保证第三方安全性-JS沙箱和CSS隔离: 依赖[micro-app](https://github.com/jd-opensource/micro-app)
+- umd.js动态加载: [SystemJS](https://github.com/systemjs/systemjs) ✨(改为自己开发的loadScript?)
+- 组件动态渲染: 依赖vue动态组件: `<component :is='Com'>`
+- 数据通信: 依赖vue属性透传
+
+### 支持多技术栈(React)
+
+- React: 使用React语法再实现一遍功能
+
+### 扩展功能
+
+- 跨技术栈(比如非React的主应用加载React前端扩展点): 使用[magic-microservices](https://github.com/bytedance/magic-microservices/blob/main/README-zh_CN.md)
+
+## 针对方案的疑问点
+
+- 为什么要改造micro-app, 需要添加什么功能?
+- 为什么不适用 `Systemjs`, 而是自己开发umd.js动态加载工具?
