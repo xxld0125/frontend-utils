@@ -591,7 +591,6 @@ const checker = (conditions) => conditions.orgcode == store.state.orgcode
 
 ### 基础功能(仅支持Vue)
 
-- 保证第三方安全性-JS沙箱和CSS隔离: 依赖[micro-app](https://github.com/jd-opensource/micro-app)
 - umd.js动态加载: [SystemJS](https://github.com/systemjs/systemjs) ✨(改为自己开发的loadScript?)
 - 组件动态渲染: 依赖vue动态组件: `<component :is='Com'>`
 - 数据通信: 依赖vue属性透传
@@ -606,5 +605,4 @@ const checker = (conditions) => conditions.orgcode == store.state.orgcode
 
 ## 针对方案的疑问点
 
-- 为什么要改造micro-app, 需要添加什么功能?
 - 为什么不适用 `Systemjs`, 而是自己开发umd.js动态加载工具?
