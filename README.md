@@ -8,12 +8,10 @@
 ## 配置项
 
 - `prettier`
-
   - `prettier-plugin-jsdoc`: 自动排序 JavaScript 和 TypeScript 导入
   - `prettier-plugin-sorted`: 用于格式化注释块。
 
 - eslint
-
   - `@eslint/js` - ESLint 官方推荐配置
   - `eslint-plugin-import`: `import/export` 语法检查
   - `eslint-plugin-promise`: 强制执行`promise` 最佳实践
@@ -23,7 +21,6 @@
   - `eslint-plugin-jsdoc` - JSDoc 注释规范
 
 - `typescript`
-
   - `@types/node`: Node.js 的 TypeScript 类型定义包
 
   - `@typescript-eslint/eslint-plugin`: 为 TypeScript 代码提供额外的 lint 规则
@@ -37,7 +34,6 @@
 - `conventional-changelog-cli`: 自动生成 changelog
 
 - `@commitlint/cli`: 检查 Git 提交信息是否符合指定的规范
-
   - `@commitlint/config-conventional`: commitlint 的约定式提交规范配置，基于 Angular 团队的提交信息约定
 
 - `@babel/core`: Babel 的核心引擎，是整个 Babel 工具链的基础, 提供转换能力

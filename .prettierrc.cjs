@@ -9,5 +9,6 @@ module.exports = {
   arrowParens: 'avoid',
   proseWrap: 'never',
   trailingComma: 'none',
-  endOfLine: 'lf'
+  endOfLine: 'lf',
+  plugins: ['prettier-plugin-jsdoc', 'prettier-plugin-sorted']
 };

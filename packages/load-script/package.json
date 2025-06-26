@@ -1,0 +1,46 @@
+{
+  "name": "@frontendUtils/load-script",
+  "version": "0.0.1",
+  "description": "基于沙箱隔离技术的UMD脚本加载器，提供安全的远程JavaScript脚本动态加载和执行能力",
+  "main": "index.js",
+  "type": "module",
+  "engines": {
+    "node": ">=20.12.1"
+  },
+  "scripts": {
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:watch": "vitest watch",
+    "test:coverage": "vitest run --coverage",
+    "build": "vite build",
+    "dev": "vite"
+  },
+  "keywords": [
+    "umd",
+    "script-loader",
+    "dynamic-import",
+    "remote-script"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xxld0125/frontend-utils.git",
+    "directory": "packages/load-script"
+  },
+  "author": "xxld0125",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "dependencies": {
+    "proxy-polyfill": "^0.3.2",
+    "xhr": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^21.1.7",
+    "happy-dom": "^18.0.1",
+    "jsdom": "^26.1.0",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.4"
+  }
+}

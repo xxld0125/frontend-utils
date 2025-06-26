@@ -47,7 +47,7 @@ graph TD
 | 1.2  | `src/scripts.ts` | 实现UMD脚本执行    | 2天      |
 | 1.3  | `src/utils.ts`   | 工具函数和错误处理 | 0.5天    |
 | 1.4  | `src/index.ts`   | 主入口和缓存机制   | 1天      |
-| 1.5  | 单元测试         | Jest测试用例       | 1.5天    |
+| 1.5  | 单元测试         | 测试用例           | 1.5天    |
 
 **实现目标：**
 
@@ -430,7 +430,7 @@ startVue2Ext({
 </template>
 
 <script>
-import { ExtComponent, CdnComponent } from '@your-org/simple-vue2-ext';
+import { CdnComponent, ExtComponent } from '@your-org/simple-vue2-ext';
 
 export default {
   components: { ExtComponent, CdnComponent },

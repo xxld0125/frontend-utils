@@ -243,9 +243,11 @@ graph TB
 </template>
 
 <script>
-import * as Vue from 'vue';
-window.Vue = Vue;
 import 'systemjs/dist/system';
+
+import * as Vue from 'vue';
+
+window.Vue = Vue;
 
 export default {
   name: 'CdnComponent',
@@ -492,10 +494,11 @@ function CdnComponent({ url, comProps }) {
 ##### 源码讲解
 
 ```js
+import magic from '@magic-microservices/magic';
 // 将 React 组件转为原生 Web Components
 import React from 'react';
 import ReactDOM from 'react-dom';
-import magic from '@magic-microservices/magic';
+
 // 引入 React 技术栈组件加载器
 import CdnComponent from './CdnComponent';
 
