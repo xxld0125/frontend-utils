@@ -83,7 +83,7 @@ export default class Sandbox {
         const rawValue = Reflect.get(rawWindow, key);
 
         // 如果是函数, 需要绑定到原生 window 上
-        return isFunction(rawValue) ? bindFunctionToRawWindow(rawValue, rawWindow) : rawValue;
+        return isFunction(rawValue) ? bindFunctionToRawWindow(rawWindow, rawValue) : rawValue;
       },
 
       /**
