@@ -6,7 +6,7 @@
         这是一个专门用于验证 <code>@frontendUtils/load-script</code> 功能的可视化平台，
         您可以通过不同的测试页面验证动态加载、沙箱隔离等核心功能。
       </p>
-      
+
       <div class="grid grid-2">
         <!-- Load Script 测试 -->
         <div class="card">
@@ -60,6 +60,25 @@
           </router-link>
         </div>
       </div>
+
+      <!-- CDN Core 测试 -->
+      <div class="card">
+        <h2 class="card-title">🚀 CDN Core 核心测试</h2>
+        <p style="margin-bottom: 16px; color: #6b7280;">
+          测试 CDN 核心功能包的高级特性，包括配置管理、网络请求和重试机制：
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <span style="background: #f3e8ff; color: #8b5cf6; padding: 4px 8px; border-radius: 4px; font-size: 14px;">配置管理</span>
+          <span style="background: #ecfdf5; color: #059669; padding: 4px 8px; border-radius: 4px; font-size: 14px;">网络请求</span>
+          <span style="background: #fef2f2; color: #dc2626; padding: 4px 8px; border-radius: 4px; font-size: 14px;">重试机制</span>
+          <span style="background: #f0f9ff; color: #2563eb; padding: 4px 8px; border-radius: 4px; font-size: 14px;">错误处理</span>
+        </div>
+        <div style="margin-top: 16px;">
+          <router-link to="/cdn-core" class="btn btn-primary">
+            CDN Core 测试 →
+          </router-link>
+        </div>
+      </div>
     </div>
 
     <!-- 核心特性介绍 -->
@@ -90,13 +109,28 @@
             自动处理函数上下文绑定，确保正确的执行环境
           </p>
         </div>
+        <div style="border: 1px solid #e5e7eb; border-radius: 6px; padding: 16px;">
+          <h3 style="color: #1f2937; margin-bottom: 8px;">🌐 网络请求</h3>
+          <p style="color: #6b7280; font-size: 14px;">
+            提供 GET/POST 请求和远程内容获取功能，支持参数传递
+          </p>
+        </div>
+        <div style="border: 1px solid #e5e7eb; border-radius: 6px; padding: 16px;">
+          <h3 style="color: #1f2937; margin-bottom: 8px;">🔄 智能重试</h3>
+          <p style="color: #6b7280; font-size: 14px;">
+            内置多级重试机制，自动处理网络异常和临时失败
+          </p>
+        </div>
       </div>
     </div>
 
     <!-- 使用指南 -->
     <div class="card">
       <h2 class="card-title">📖 使用指南</h2>
-      <div class="code-block">
+      <div class="grid grid-2">
+        <div>
+          <h3 style="margin-bottom: 12px;">Load Script 基础用法</h3>
+          <div class="code-block">
 // 基本用法
 import { loadScript } from '@frontendUtils/load-script'
 
@@ -107,6 +141,27 @@ console.log(_.chunk([1, 2, 3, 4, 5, 6], 2)) // [[1, 2], [3, 4], [5, 6]]
 // 加载 Day.js
 const dayjs = await loadScript('https://unpkg.com/dayjs@1.11.10/dayjs.min.js')
 console.log(dayjs().format('YYYY-MM-DD'))
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom: 12px;">CDN Core 高级用法</h3>
+          <div class="code-block">
+// CDN Core 用法
+import { loadScript, setCdnConfig, getData } from '@frontendUtils/cdn-core'
+
+// 配置 CDN 基础路径
+setCdnConfig({
+  baseURL: 'https://unpkg.com',
+  errorHandler: (error) => console.error('CDN 错误:', error)
+})
+
+// 基于配置加载脚本
+const _ = await loadScript('/lodash@4.17.21/lodash.min.js')
+
+// 网络请求
+const data = await getData('https://api.example.com/data')
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -114,4 +169,4 @@ console.log(dayjs().format('YYYY-MM-DD'))
 
 <script setup>
 // 首页不需要特殊逻辑
-</script> 
+</script>

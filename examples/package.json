@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@frontendUtils/load-script": "workspace:*",
+    "@frontendUtils/cdn-core": "workspace:*",
     "vue": "^3.4.19",
     "vue-router": "^4.5.1"
   },
