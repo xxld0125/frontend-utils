@@ -1,0 +1,36 @@
+{
+  "name": "@frontendUtils/cdn-core",
+  "version": "0.0.1",
+  "description": "cdn 核心逻辑包",
+  "type": "module",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "types": "src/index.ts",
+  "engines": {
+    "node": ">=20.12.1"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "keywords": [
+    "umd"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xxld0125/frontend-utils.git",
+    "directory": "packages/cdn-core"
+  },
+  "author": "xxld0125",
+  "files": [
+    "src",
+    "dist"
+  ],
+  "dependencies": {
+    "@frontendUtils/load-script": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
+}

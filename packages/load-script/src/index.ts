@@ -6,8 +6,8 @@ const scriptsCache: Record<string, any> = {};
 
 export async function loadScript(url: string) {
   if (!url) {
-    throw new Error(`[@@frontendUtils/load-script ${version}]: url is empty`);
-  }
+    throw new Error(`[@frontendUtils/load-script ${version}]: url is empty`);
+  };
 
   const request = async () => {
     const code = await getRemoteString(url);
