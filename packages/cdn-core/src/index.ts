@@ -6,6 +6,7 @@ import {
   getUrl,
   setCdnConfig,
 } from './config';
+import { startCdnCore } from './start';
 import { coreLoadScript as loadScript } from './loadScript';
 
 
@@ -18,6 +19,7 @@ export {
   getErrorHandler,
   getRemoteString,
   postData,
+  startCdnCore
 };
 
 export type {

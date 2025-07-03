@@ -32,6 +32,11 @@
               CDN Core 测试
             </router-link>
           </li>
+          <li>
+            <router-link to="/cdn-vue2" class="nav-link" active-class="active">
+              CDN Vue2 测试
+            </router-link>
+          </li>
         </ul>
       </div>
     </nav>

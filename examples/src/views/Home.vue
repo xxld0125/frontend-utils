@@ -79,6 +79,25 @@
           </router-link>
         </div>
       </div>
+
+      <!-- CDN Vue2 测试 -->
+      <div class="card">
+        <h2 class="card-title">🎯 CDN Vue2 组件测试</h2>
+        <p style="margin-bottom: 16px; color: #6b7280;">
+          测试 Vue 2 动态组件加载功能，验证远程Vue组件的加载、渲染和交互：
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <span style="background: #e7f5e7; color: #2d5f2d; padding: 4px 8px; border-radius: 4px; font-size: 14px;">组件加载</span>
+          <span style="background: #fff7ed; color: #c2410c; padding: 4px 8px; border-radius: 4px; font-size: 14px;">属性传递</span>
+          <span style="background: #fef3f2; color: #991b1b; padding: 4px 8px; border-radius: 4px; font-size: 14px;">事件处理</span>
+          <span style="background: #f0f4ff; color: #3730a3; padding: 4px 8px; border-radius: 4px; font-size: 14px;">生命周期</span>
+        </div>
+        <div style="margin-top: 16px;">
+          <router-link to="/cdn-vue2" class="btn btn-success">
+            CDN Vue2 测试 →
+          </router-link>
+        </div>
+      </div>
     </div>
 
     <!-- 核心特性介绍 -->
@@ -121,6 +140,18 @@
             内置多级重试机制，自动处理网络异常和临时失败
           </p>
         </div>
+        <div style="border: 1px solid #e5e7eb; border-radius: 6px; padding: 16px;">
+          <h3 style="color: #1f2937; margin-bottom: 8px;">🎯 Vue2 组件</h3>
+          <p style="color: #6b7280; font-size: 14px;">
+            专为Vue 2设计的动态组件加载器，支持属性传递和事件绑定
+          </p>
+        </div>
+        <div style="border: 1px solid #e5e7eb; border-radius: 6px; padding: 16px;">
+          <h3 style="color: #1f2937; margin-bottom: 8px;">🔧 配置灵活</h3>
+          <p style="color: #6b7280; font-size: 14px;">
+            支持自定义加载状态、错误处理和全局配置管理
+          </p>
+        </div>
       </div>
     </div>
 
@@ -160,6 +191,47 @@ const _ = await loadScript('/lodash@4.17.21/lodash.min.js')
 
 // 网络请求
 const data = await getData('https://api.example.com/data')
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-2">
+        <div>
+          <h3 style="margin-bottom: 12px;">CDN Vue2 组件用法</h3>
+          <div class="code-block">
+// Vue 2 项目中使用
+import { CdnComponent, startCdnComponent } from '@frontendUtils/cdn-vue2'
+
+// 全局配置
+startCdnComponent({
+  baseURL: 'https://unpkg.com',
+  errorFallback: '组件加载失败',
+  loadingFallback: '正在加载组件...'
+})
+
+// 注册全局组件
+Vue.component('CdnComponent', CdnComponent)
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom: 12px;">Vue 模板中使用</h3>
+          <div class="code-block">
+&lt;template&gt;
+  &lt;div&gt;
+    &lt;!-- 动态加载远程组件 --&gt;
+    &lt;CdnComponent
+      url="/my-component@1.0.0/dist/component.umd.js"
+      export-name="MyComponent"
+      :com-props="{ title: '动态组件', data: userData }"
+      :com-events="{ click: handleClick, change: handleChange }"
+      @loading="onLoading"
+      @error="onError"
+    &gt;
+      &lt;!-- 默认插槽内容 --&gt;
+      &lt;div&gt;组件内容&lt;/div&gt;
+    &lt;/CdnComponent&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
           </div>
         </div>
       </div>

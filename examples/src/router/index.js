@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import CdnCore from '../views/CdnCore.vue'
+import CdnVue2 from '../views/CdnVue2.vue'
 import Home from '../views/Home.vue'
 import LoadScript from '../views/LoadScript.vue'
 import Performance from '../views/Performance.vue'
@@ -31,6 +32,11 @@ const routes = [
     path: '/cdn-core',
     name: 'CdnCore',
     component: CdnCore
+  },
+  {
+    path: '/cdn-vue2',
+    name: 'CdnVue2',
+    component: CdnVue2
   }
 ]
 

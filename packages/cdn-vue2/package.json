@@ -1,0 +1,29 @@
+{
+  "name": "@frontendUtils/cdn-vue2",
+  "version": "1.0.0",
+  "description": "Vue 2 dynamic component loader for CDN resources",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "engines": {
+    "node": ">=20.12.1"
+  },
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite"
+  },
+  "keywords": ["vue", "vue2", "cdn", "dynamic", "component", "loader"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xxld0125/frontend-utils.git",
+    "directory": "packages/cdn-vue2"
+  },
+  "author": "xxld0125",
+  "dependencies": {
+    "@frontendUtils/cdn-core": "workspace:^"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
+}
