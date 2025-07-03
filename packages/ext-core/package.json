@@ -1,0 +1,58 @@
+{
+  "name": "@frontendUtils/ext-core",
+  "version": "1.0.0",
+  "description": "前端扩展点核心库，提供动态扩展点管理、CDN 脚本加载、缓存机制和错误处理等功能",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "engines": {
+    "node": ">=20.12.1"
+  },
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "echo \"暂无测试\" && exit 0",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "extension",
+    "extension-point",
+    "core",
+    "frontend",
+    "cdn",
+    "script-loader",
+    "micro-frontend",
+    "plugin-system",
+    "dynamic-loading",
+    "javascript",
+    "typescript"
+  ],
+  "author": "xxld0125",
+  "homepage": "https://github.com/xxld0125/frontend-utils/tree/master/packages/ext-core#readme",
+  "bugs": {
+    "url": "https://github.com/xxld0125/frontend-utils/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xxld0125/frontend-utils.git",
+    "directory": "packages/ext-core"
+  },
+  "license": "MIT",
+  "files": [
+    "src",
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "dependencies": {
+    "@frontendUtils/cdn-core": "workspace:^"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
