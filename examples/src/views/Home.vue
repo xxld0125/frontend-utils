@@ -98,6 +98,25 @@
           </router-link>
         </div>
       </div>
+
+      <!-- Ext Core 测试 -->
+      <div class="card">
+        <h2 class="card-title">🔌 Ext Core 扩展点测试</h2>
+        <p style="margin-bottom: 16px; color: #6b7280;">
+          测试前端扩展点核心库功能，包括动态扩展点管理、条件匹配和智能缓存：
+        </p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <span style="background: #f3e8ff; color: #7c3aed; padding: 4px 8px; border-radius: 4px; font-size: 14px;">扩展点管理</span>
+          <span style="background: #ecfdf5; color: #047857; padding: 4px 8px; border-radius: 4px; font-size: 14px;">条件匹配</span>
+          <span style="background: #fef3f2; color: #dc2626; padding: 4px 8px; border-radius: 4px; font-size: 14px;">错误处理</span>
+          <span style="background: #f0f9ff; color: #1d4ed8; padding: 4px 8px; border-radius: 4px; font-size: 14px;">智能缓存</span>
+        </div>
+        <div style="margin-top: 16px;">
+          <router-link to="/ext-core" class="btn btn-primary">
+            Ext Core 测试 →
+          </router-link>
+        </div>
+      </div>
     </div>
 
     <!-- 核心特性介绍 -->
@@ -150,6 +169,12 @@
           <h3 style="color: #1f2937; margin-bottom: 8px;">🔧 配置灵活</h3>
           <p style="color: #6b7280; font-size: 14px;">
             支持自定义加载状态、错误处理和全局配置管理
+          </p>
+        </div>
+        <div style="border: 1px solid #e5e7eb; border-radius: 6px; padding: 16px;">
+          <h3 style="color: #1f2937; margin-bottom: 8px;">🔌 扩展点系统</h3>
+          <p style="color: #6b7280; font-size: 14px;">
+            动态扩展点管理，支持条件匹配、远程加载和智能缓存
           </p>
         </div>
       </div>
@@ -232,6 +257,48 @@ Vue.component('CdnComponent', CdnComponent)
     &lt;/CdnComponent&gt;
   &lt;/div&gt;
 &lt;/template&gt;
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-2">
+        <div>
+          <h3 style="margin-bottom: 12px;">Ext Core 扩展点用法</h3>
+          <div class="code-block">
+// 初始化扩展点系统
+import { startExtCore } from '@frontendUtils/ext-core'
+
+startExtCore({
+  appGroup: 'your-app-group',
+  appName: 'your-app-name',
+  devUseTestApi: true,
+  errorHandler: console.error
+})
+
+// 配置环境变量
+window.ENVIRONMENT_EXT = {
+  env: 'dev',
+  'ares-ext': 'https://api.example.com/ext',
+  'jarvis-node-id': 'your-node-id'
+}
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-bottom: 12px;">创建和使用扩展点</h3>
+          <div class="code-block">
+// 创建扩展点
+import { extJs } from '@frontendUtils/ext-core'
+
+const dataProcessor = extJs({
+  name: 'data-processor',
+  checker: conditions => conditions.userRole === 'admin',
+  blockOnError: false,
+  exportName: 'processData',
+  originFn: data => ({ ...data, processed: true })
+})
+
+// 使用扩展点
+const result = await dataProcessor({ id: 1, name: 'test' })
           </div>
         </div>
       </div>

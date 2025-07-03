@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 import CdnCore from '../views/CdnCore.vue'
 import CdnVue2 from '../views/CdnVue2.vue'
+import ExtCore from '../views/ExtCore.vue'
 import Home from '../views/Home.vue'
 import LoadScript from '../views/LoadScript.vue'
 import Performance from '../views/Performance.vue'
@@ -37,6 +38,11 @@ const routes = [
     path: '/cdn-vue2',
     name: 'CdnVue2',
     component: CdnVue2
+  },
+  {
+    path: '/ext-core',
+    name: 'ExtCore',
+    component: ExtCore
   }
 ]
 

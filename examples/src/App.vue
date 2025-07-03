@@ -37,6 +37,11 @@
               CDN Vue2 测试
             </router-link>
           </li>
+          <li>
+            <router-link to="/ext-core" class="nav-link" active-class="active">
+              Ext Core 测试
+            </router-link>
+          </li>
         </ul>
       </div>
     </nav>
