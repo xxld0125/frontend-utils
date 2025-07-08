@@ -2,12 +2,8 @@ import { getErrorHandler, getUrl, postData } from '@frontendUtils/cdn-core';
 
 import { version } from '../../package.json';
 import { getExtConfig } from '../config';
-
-export type ExtType = 'cdn' | 'iframe' | 'image';
-
 export interface Ext {
   name: string;
-  type: ExtType;
   url: string;
   conditions: Record<string, string>;
 }
@@ -27,7 +23,6 @@ class ExtApi {
   private hasLoad: boolean = false;
   private extList: Ext[] = [];
   private retryCount: number = 0;
-  private readonly extTypeMap: Record<string, ExtType> = { '1': 'iframe', '2': 'cdn', '3': 'image' };
   private request: Promise<{ list: ExtOriginType[] } | undefined> | undefined;
 
   // 获取扩展点列表
@@ -83,11 +78,10 @@ class ExtApi {
 
   setExtList(list: ExtOriginType[]): void {
     this.extList = list
-      .filter(item => this.extTypeMap[item.extension_point_type] && item.type === 2)
+      .filter(item => item.type === 2)
       .map(item => ({
         name: item.interface_method,
         url: getUrl(item.extension_point_url),
-        type: this.extTypeMap[item.extension_point_type] as ExtType,
         conditions: item.condition
       }));
   }

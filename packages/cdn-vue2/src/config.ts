@@ -3,7 +3,7 @@ import type { CdnCoreConfigData } from '@frontendUtils/cdn-core';
 
 let configObj = {};
 
-interface CdnComponentConfig extends Partial<CdnCoreConfigData> {
+export interface CdnComponentConfig extends Partial<CdnCoreConfigData> {
   errorFallback?: string | object;
   loadingFallback?: string | object;
 }

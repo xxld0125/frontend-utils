@@ -52,7 +52,6 @@ export function extJs<T = any>(options: ExtJsOptions<T>): (...fnOptions: any[]) 
         ext = {
           name: 'DEV_URL',
           url: devUrl,
-          type: 'cdn',
           conditions: {}
         };
       } else {

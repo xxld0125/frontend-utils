@@ -1,12 +1,38 @@
 {
-  "name": "ext-vue",
+  "name": "@frontendUtils/ext-vue2",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
-  "scripts": {},
-  "keywords": [],
+  "description": "Vue 2 扩展点组件库，支持动态加载远程扩展点组件和逻辑",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch"
+  },
+  "keywords": [
+    "vue2",
+    "extension",
+    "dynamic-component",
+    "remote-component",
+    "micro-frontend"
+  ],
+  "author": "xxld0125",
   "license": "MIT",
   "devDependencies": {
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  },
+  "dependencies": {
+    "@frontendUtils/ext-core": "workspace:^",
+    "@frontendUtils/cdn-vue2": "workspace:^"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.0 || ^2.7.0"
   }
 }

@@ -1,611 +1,246 @@
-# 前端扩展点
+# @frontendUtils/ext-vue2
 
-## 背景
+Vue 2 扩展点组件库，支持动态加载远程扩展点组件和逻辑。
 
-### 什么是扩展点
+## 特性
 
-扩展点是对现有标准软件流程进行的自定义扩展, 从而满足各类客户的定制要求。
+- 🚀 动态加载远程 UMD 组件
+- 🎯 支持扩展点条件检测
+- 🔄 内置加载状态和错误处理
+- 🛡️ 支持沙箱隔离（可选）
+- 📦 轻量级，易于集成
 
-一般定制化需求目前有两种开发模式：
+## 安装
 
-- 修改源代码: 直接修改原仓库代码(通过个性化灰度开关`if/else`控制具体执行逻辑)
-- 扩展点：由 SVIP、业务组或租户自行开发，通过动态加载的方式（前端）或者转发代理的方式（后端）替换或者增强原公有云逻辑，其代码和公有云仓库分离，并且扩展点一次改造，后面可以横向扩展多个实现，且业务组无需再次发版。
-
-|  | 扩展点 | 修改源代码 |
-| :-- | :-- | :-- |
-| **前端兼容性** | **不支持 IE 和 小程序** | 无兼容性问题 |
-| 开发主体 | SVIP、业务组、第三方 | 业务组 |
-| 对外宣传 | 亮点（可对外宣传，产品有自主定制化的能力） | 无 |
-| 扩展性 | 高（建立在 PO 对产品扩展点规划基础上） | 低 |
-| 代码灵活性 | 中（受限于插槽的位置和参数） | 高（想怎么改就怎么改） |
-| 开发成本 | **业务组:**<br>• 初次：开辟插槽和确定通信参数<br>• 后期：无成本（无需再做任何事）<br><br>**扩展点开发者:**<br>• 初次：确定通信参数 + 定制化需求开发<br>• 后期：定制化需求开发 | 业务组（来一个做一个） |
-| 维护性 | 依赖于开发者的插槽设计 | 依赖于开发者的代码抽象性 |
-| 代码 | 独立 | 在源码中 |
-| 热更新 | 支持（业务组不需要发版） | 不支持（业务组需要发版） |
-
-### 业界实践
-
-[**_*youzan*_**](https://doc.youzanyun.com/resource/doc/3005)
-
-## 使用流程
-
-### 前置
-
-按照现有功能及需求合理拆分前端扩展点
-
-### 扩展点管理平台
-
-需要在扩展点管理平台, 配置扩展点仓库打包后的umd.js在线地址(上传后的cdn链接)及生效的用户规则
-
-### 主应用
-
-按照规划的扩展点进行扩展点埋点
-
-### 扩展点定制化功能
-
-对接主应用的埋点进行定制化功能开发, 将开发后的代码打包成umd.js并上传到cdn
-
-## 前端扩展点分类
-
-- 逻辑扩展点: 个性化逻辑
-- 组件扩展点: 个性化组件
-
-## 扩展点SDK需要支持的能力
-
-**扩展点需要把它想的太神秘和另类，由两个能力组成 组件 + 函数，凡是平常开发能用 组件 和 函数 搞定的，扩展点都能搞定，只不过它加载的是远程的函数和组件而已，你本地是引用的本地的函数和组件。**
-
-- 支持 `Vue`、 `React`、`Web Components` 技术栈的扩展点加载器
-- 支持纯 JS 逻辑扩展
-- 支持 CSS、JS 沙箱，保证安全性
-- 提供了数据通信的解决方案
-- 提供脚手架及扩展点模板，快速创建扩展点
-
-## 技术架构图
-
-```mermaid
-graph TB
-    %% 便签
-    note1["打包构建<br/>组件文档"]
-    note2["判断是否有扩展点<br/>兼容 iframe 扩展点形式<br/>兼容 图片 扩展点形式<br/>调用 CdnComponent 能力"]
-    note3["各个框架组件渲染<br/>组件转 web component 能力"]
-    note4["加载 UMD JS<br/>调求 Ext 服务<br/>全局配置"]
-
-    %% 脚手架层
-    subgraph layer1["脚手架层<br/>方便业务组创建扩展点"]
-        scaffold_content[" "]
-    end
-
-    %% ExtComponents层
-    subgraph layer2["ExtComponents 层<br/>扩展点处理层"]
-        ext_react["React"]
-        ext_vue["Vue"]
-        ext_web["Web Components"]
-        ext_more["..."]
-    end
-
-    %% CdnComponent层
-    subgraph layer3["CdnComponent 层<br/>各个框架组件渲染层"]
-        cdn_react["React"]
-        cdn_vue["Vue"]
-        cdn_web["Web Components"]
-        cdn_more["..."]
-        micro["micro-app<br/>web component 能力及沙箱能力"]
-    end
-
-    %% core层
-    subgraph layer4["core 层<br/>框架无关的纯 JS 逻辑"]
-        core_content[" "]
-    end
-
-    %% 便签指向
-    note1 -.-> layer1
-    note2 -.-> layer2
-    note3 -.-> layer3
-    note4 -.-> layer4
-
-    %% 层级关系
-    layer1 --> layer2
-    layer2 --> layer3
-    layer3 --> layer4
-
-    %% 框架对应
-    ext_react --> cdn_react
-    ext_vue --> cdn_vue
-    ext_web --> cdn_web
-    ext_more --> cdn_more
-
-    %% 汇聚关系
-    cdn_react --> micro
-    cdn_vue --> micro
-    cdn_web --> micro
-    cdn_more --> micro
-
-    %% 样式定义
-    classDef noteStyle fill:#fff2cc,stroke:#d6b656,stroke-width:2px
-    classDef scaffoldStyle fill:#e3f2fd,stroke:#1976d2,stroke-width:3px
-    classDef extStyle fill:#e8f5e8,stroke:#388e3c,stroke-width:3px
-    classDef cdnStyle fill:#fff3e0,stroke:#f57c00,stroke-width:3px
-    classDef coreStyle fill:#fce4ec,stroke:#c2185b,stroke-width:3px
-    classDef frameworkStyle fill:#f3e5f5,stroke:#7b1fa2,stroke-width:1px
-    classDef microStyle fill:#e0f7fa,stroke:#00838f,stroke-width:2px
-    classDef hiddenStyle fill:transparent,stroke:transparent
-
-    class note1,note2,note3,note4 noteStyle
-    class layer1 scaffoldStyle
-    class layer2 extStyle
-    class layer3 cdnStyle
-    class layer4 coreStyle
-    class ext_react,ext_vue,ext_web,ext_more,cdn_react,cdn_vue,cdn_web,cdn_more frameworkStyle
-    class micro microStyle
-    class scaffold_content,core_content hiddenStyle
+```bash
+npm install @frontendUtils/ext-vue2
+# 或
+yarn add @frontendUtils/ext-vue2
+# 或
+pnpm add @frontendUtils/ext-vue2
 ```
 
-## 流程图
+## 快速开始
 
-![流程图](./assets/workflow-diagram.png)
+### 初始化
 
-## 扩展点埋点原则
+```javascript
+import { extApp } from '@frontendUtils/ext-vue2';
 
-### 横向扩展原则
+// 初始化扩展点应用
+extApp({
+  // 扩展点核心配置
+  baseUrl: 'https://your-ext-api.com',
+  timeout: 5000,
 
-虽然大多数扩展点是由某个定制化诉求产生的，但在扩展点开辟的过程中，不仅仅要关注到这一个租户的需求，更注重后续的横向扩展性。
-
-### 包裹原则
-
-推荐尽量小的减少包裹内容, 这样可以减少后续变更的可能性。
-
-## 方案思考
-
-### 如何实现扩展点能力既做到执行第三方代码
-
-1.方案一: 将原请求转发 ![图片](https://s1.ax1x.com/2022/05/23/X9VRQx.png)
-
-2.方案二: 将代码下载到本地执行 ![图片](https://s1.ax1x.com/2022/05/23/X9ngAO.png)
-
-|            | 后端 | 前端        |
-| :--------- | :--- | :---------- |
-| 转发       | ✅   | ✅ (iframe) |
-| 加载并执行 | ❌   | ✅          |
-
-现在问题是如何将前端代码下载到本地并执行?
-
-- 需要下载的是什么?
-- 执行得到的结果是什么?
-
-### 远程执行结果
-
-组件 + 函数逻辑 = 前端应用
-
-- 需要下载的是什么: js
-- 执行得到的结果是什么: 组件/函数
-
-### 组件的加载和执行
-
-扩展点如何做? -> 前端代码下载并执行 -> 组件的加载并执行
-
-#### 基础能力
-
-- 动态加载和渲染
-- 数据通信
-
-#### 额外能力
-
-- 支持多技术栈
-- 保证第三方安全性: JS沙箱和CSS隔离
-
-### 技术详解
-
-#### 组件动态加载和渲染
-
-#### 前置知识
-
-- 组件在数据层面是什么: 就是一个对象
-- 组件如何动态渲染: `<component :is='Com'>`
-- UMD: 一种在运行时兼容`CommonJs`、`AMD`、`无模块`等规范于一身的实现, 无法兼容`ES MODULE`
-
-```js
-(function (global, factory) {
-  // CommonJS 规范
-  typeof exports === 'object' && typeof module !== 'undefined'
-    ? (module.exports = factory(require('vue')))
-    : // AMD 规范
-      typeof define === 'function' && define.amd
-      ? define(['vue'], factory)
-      : // 普通浏览器
-        ((global = typeof globalThis !== 'undefined' ? globalThis : global || self),
-        (global.Com = factory(global.Vue)));
-})(this, function () {
-  'use strict';
-  function Com() {
-    console.log('我是一个组件');
-  }
-  return Com;
+  // CDN 组件配置
+  errorFallback: '加载失败，请重试',
+  loadingFallback: '正在加载...',
+  enableSandbox: false,
 });
 ```
 
-- UMD JS加载
-  - `RequireJs` / `SystemJs` 模块加载器
-  - `fetch`源码 + `eval` / `new Function` 执行(没有开源, 自己开发)
-
-|        | RequireJs | SystemJs | fetch + eval |
-| :----- | :-------- | :------- | ------------ |
-| 大小   | 86.5KB    | 33.6KB   | 1KB          |
-| 可靠性 | ⭐⭐⭐    | ⭐⭐⭐   | ⭐           |
-
-最终方案：[SystemJS](https://github.com/systemjs/systemjs) ✨
-
-#### 组件加载源码实现
+### 使用扩展点组件
 
 ```vue
-<!-- 源码 -->
 <template>
-  <component :is="Com" v-bind="comProps" />
+  <div>
+    <h1>主应用内容</h1>
+
+    <!-- 扩展点组件 -->
+    <ExtComponent
+      name="user-dashboard"
+      :checker="checkCondition"
+      :block-on-error="true"
+      :com-props="{ userId: 123, userName: 'John' }"
+      :com-events="{ onUserUpdate: handleUserUpdate }"
+      @loading="onLoading"
+      @error="onError"
+    >
+      <!-- 默认内容（扩展点不存在时显示） -->
+      <div>默认用户面板</div>
+
+      <!-- 自定义加载状态 -->
+      <template #loading>
+        <div>自定义加载中...</div>
+      </template>
+
+      <!-- 自定义错误状态 -->
+      <template #error>
+        <div>自定义错误提示</div>
+      </template>
+    </ExtComponent>
+  </div>
 </template>
 
 <script>
-import 'systemjs/dist/system';
-
-import * as Vue from 'vue';
-
-window.Vue = Vue;
+import { ExtComponent } from '@frontendUtils/ext-vue2';
 
 export default {
-  name: 'CdnComponent',
-  props: {
-    url: {
-      // 组件 URL
-      type: String,
-      required: true
-    },
-    comProps: {
-      // 组件属性
-      type: Object,
-      default: () => ({})
-    }
-  },
-  data() {
-    return {
-      Com: null
-    };
+  components: {
+    ExtComponent
   },
   methods: {
-    loadCom() {
-      window.System.import(this.url).then(res => {
-        this.Com = res;
-      });
-    }
-  },
-  created() {
-    this.loadCom();
-  }
-};
-</script>
-```
-
-```vue
-<!-- 使用 -->
-<cdn-component :url="url" :com-props="{ msg: 'Hello Vue 3 + Vite' }" />
-```
-
-`<CdnComponent />`被称为组件加载器
-
-### 数据通信
-
-#### 通信方式选择
-
-- 发布订阅的事件机制
-- 属性透传方式
-- 其他...
-
-属性透传: 简单、无学习成本、符合日常习惯
-
-```vue
-<cdn-component :url="url" :com-props="{ msg: 'Hello Vue 3 + Vite' }" />
-```
-
-```vue
-<component :is="Com" v-bind="comProps" />
-
-<script>
-export default {
-  name: 'CdnComponent',
-  props: {
-    comProps: {
-      // 组件属性
-      type: Object,
-      default: () => ({})
-    }
-  }
-};
-</script>
-```
-
-### 多技术栈
-
-加载器用什么技术栈实现?
-
-```html
-<!-- React、Vue or Others? -->
-<CdnComponent></CdnComponent>
-```
-
-- 纯 Web Components, 一次书写, 到处使用([taro3](https://github.com/NervJS/taro/tree/main/packages/taro-components/src/components)方案)
-- React、Vue同样逻辑, 不同技术栈实现
-
-#### Web Components
-
-##### 概念、定义和使用
-
-Web Components 是浏览器原生支持的组件开发方式, 能够跨技术栈。
-
-```js
-// 定义 web components
-class HelloWorld extends HTMLElement {
-  // 响应式 props
-  static get observedAttributes() {
-    return ['msg'];
-  }
-
-  constructor() {
-    super();
-  }
-
-  // 默认会出发一次，类似 useEffect
-  attributeChangedCallback(name, oldValue, newValue) {
-    this.innerHTML = `<h1>你好，${newValue}</h1>`;
-  }
-}
-
-// 注册
-customElements.define('hello-world', HelloWorld);
-```
-
-```html
-<!-- 使用 web components -->
-<hello-world msg="张三" />
-```
-
-##### Shadow DOM 和 样式隔离
-
-`Shadow DOM`的主要作用是将 HTML 结构和 CSS 样式隐藏并隔离起来。不过有以下注意点:
-
-- 无法隔离JS
-- 无法影响到外部, 但也无法继承外部样式
-
-```js
-class HelloWorldShadow extends HTMLElement {
-  constructor() {
-    super();
-    // 使用 attachShadow 创建 shadowDOM
-    this.shadowDOM = this.attachShadow({ mode: 'open' });
-  }
-
-  attributeChangedCallback(name, oldValue, newValue) {
-    // 修改 shadowDOM
-    this.shadowDOM.innerHTML = `<h1>你好，${newValue}</h1>`;
-  }
-}
-```
-
-```html
-<!-- 使用 web components -->
-<hello-world-shadow msg="张三" />
-```
-
-##### 工具和未来展望
-
-Web Components 工具
-
-- [lit](https://github.com/lit/lit)
-- [stenciljs](https://github.com/stenciljs/core)
-
-#### 加载器用什么技术栈实现
-
-```html
-<!-- React、Vue or Others? -->
-<CdnComponent></CdnComponent>
-```
-
-- 纯 Web Components, 一次书写, 到处使用([taro3](https://github.com/NervJS/taro/tree/main/packages/taro-components/src/components)方案)
-- React、Vue同样逻辑, 不同技术栈实现 ✅
-
-Web Components 问题:
-
-- 无法处理 antd/element 表单联动场景
-
-#### 源码展示
-
-##### vue
-
-```vue
-<!-- vue 技术栈 -->
-<template>
-  <component :is="Com" v-bind="comProps" />
-</template>
-
-<script>
-export default {
-  name: 'CdnComponent',
-  props: {
-    url: String,
-    comProps: Object
-  },
-  data() {
-    return {
-      Com: null
-    };
-  },
-  methods: {
-    loadCom() {
-      window.System.import(this.url).then(res => {
-        this.Com = res;
-      });
-    }
-  },
-  created() {
-    this.loadCom();
-  }
-};
-</script>
-```
-
-##### React
-
-```js
-function CdnComponent({ url, comProps }) {
-  const [Com, setCom] = useState(null)
-
-  // 请求并动态加载内容
-  useEffect(() => {
-    (window as any).System.import(url).then(res => {
-      setCom(() => res.default)
-    })
-  }, [url])
-
-  // 渲染组件
-  return Com ? React.createElement(Com, comProps) : null
-}
-```
-
-#### 架构图
-
-![架构图](./assets/cdn-component.svg)
-
-### Angular场景--跨技术栈
-
-#### 背景
-
-不想在旧项目上继续写Angular
-
-#### 如何让加载器能够跨技术栈
-
-##### Angular、React 混用
-
-含义：Angular 和 React 混用，所以加载器就还是 React 技术栈，扩展点组件也用 React 技术栈。
-
-结论：目前业界没有让两个技术栈同时使用的奇葩场景和方案，并且租户后台项目较老，Webpack 改造风险较大
-
-##### React + Web Components
-
-含义：仍然使用 React 技术栈实现加载器，但是通过 Web Components 包一层后，使其能跨技术栈
-
-结论：目前业界已经有开源的解决方案——[magic-microservices](https://github.com/bytedance/magic-microservices/blob/main/README-zh_CN.md), 可以轻松实现。
-
-##### 源码讲解
-
-```js
-import magic from '@magic-microservices/magic';
-// 将 React 组件转为原生 Web Components
-import React from 'react';
-import ReactDOM from 'react-dom';
-
-// 引入 React 技术栈组件加载器
-import CdnComponent from './CdnComponent';
-
-magic(
-  'cdn-component',
-  {
-    // 挂载
-    mount: (container, props) => {
-      ReactDOM.render(React.createElement(CdnComponent, props, null), container);
+    // 检测函数：决定是否加载扩展点
+    checkCondition(conditions) {
+      return conditions.orgCode === this.$store.state.user.orgCode;
     },
-    // 更新
-    updated(attrName, value, container, props) {
-      ReactDOM.render(React.createElement(CdnComponent, props, null), container);
+
+    handleUserUpdate(userData) {
+      console.log('用户更新:', userData);
+    },
+
+    onLoading(isLoading) {
+      console.log('加载状态:', isLoading);
+    },
+
+    onError(error) {
+      console.error('扩展点错误:', error);
     }
-  },
-  { propTypes: { url: String, comProps: Object } }
-);
-```
-
-```html
-<!-- 使用 -->
-<cdn-component url="xxx" />
-```
-
-### JS沙箱和CSS隔离
-
-#### 重点 + 难点
-
-没有开源的!
-
-- 从微前端框架中抽离沙箱逻辑
-- 改造[micro-app](https://github.com/jd-opensource/micro-app)
-
-#### micro-app 改造
-
-- 增加`componentMode`属性
-- 获取HTML时, 手动拼接HTML即可
-
-```js
-export default function extractHtml(app, componentMode) {
-  // 组件模式
-  if (componentMode) {
-    // 直接返回拼接好的 HTML
-    return Promise.resolve(`<micro-app-head><script src='${app.url}'></script></micro-app-head>`);
   }
+}
+</script>
+```
 
-  // 请求远程的 HTML
-  return fetchSource(app.url, app.name, { cache: 'no-cache' });
+## API 参考
+
+### extApp(options)
+
+初始化扩展点应用配置。
+
+**参数：**
+- `options` - 配置对象，包含扩展点核心配置和 CDN 组件配置
+
+### ExtComponent 组件属性
+
+| 属性 | 类型 | 必填 | 默认值 | 描述 |
+|------|------|------|--------|------|
+| `name` | `String` | ✅ | - | 扩展点标识符 |
+| `checker` | `Function` | ✅ | - | 条件检测函数 |
+| `blockOnError` | `Boolean` | ✅ | `true` | 错误时是否阻塞原流程 |
+| `exportName` | `String` | ❌ | - | 指定导出的组件名称 |
+| `comProps` | `Object` | ❌ | `{}` | 传递给扩展点组件的属性 |
+| `comEvents` | `Object` | ❌ | `{}` | 传递给扩展点组件的事件 |
+| `errorHandler` | `Function` | ❌ | - | 自定义错误处理函数 |
+| `loadingHandler` | `Function` | ❌ | - | 自定义加载状态处理函数 |
+| `devUrl` | `String` | ❌ | - | 开发环境下的调试链接 |
+
+### ExtComponent 事件
+
+| 事件 | 参数 | 描述 |
+|------|------|------|
+| `loading` | `(isLoading: boolean)` | 加载状态变化 |
+| `error` | `(error: any)` | 发生错误时触发 |
+
+### ExtComponent 插槽
+
+| 插槽 | 描述 |
+|------|------|
+| `default` | 默认内容（扩展点不存在时显示） |
+| `loading` | 自定义加载状态显示 |
+| `error` | 自定义错误状态显示 |
+
+## 开发扩展点
+
+### 创建扩展点组件
+
+```javascript
+// extension.js - 扩展点组件
+export default {
+  name: 'UserDashboardExtension',
+  props: ['userId', 'userName'],
+  template: `
+    <div class="user-dashboard-ext">
+      <h2>扩展用户面板</h2>
+      <p>用户ID: {{ userId }}</p>
+      <p>用户名: {{ userName }}</p>
+      <button @click="updateUser">更新用户</button>
+    </div>
+  `,
+  methods: {
+    updateUser() {
+      this.$emit('onUserUpdate', {
+        id: this.userId,
+        name: this.userName,
+        updatedAt: new Date()
+      });
+    }
+  }
 }
 ```
 
-#### 改造后架构
+### 构建为 UMD
 
-![改造后架构图](./assets/micro-app-architecture.png)
-
-默认不开启沙箱
-
-### 业务简介
-
-#### 运行流程
-
-![运行流程图](./assets/business-flow-diagram.png)
-
-```js
-const checker = (conditions) => conditions.orgcode == store.state.orgcode
-<ExtComponent name='demo1' checker={checker}></ExtComponent> // 扩展点加载器
-```
-
-```js
-[
-  {
-    name: 'demo1',
-    url: 'https://res.cn/cdnjs/demo1/index.umd.js',
-    conditions: {
-      orgcode: 'aaa'
-    }
-  },
-  {
-    name: 'demo2',
-    url: 'https://res.cn/cdnjs/demo2/index.umd.js',
-    conditions: {
-      userName: 'jack'
+```javascript
+// vite.config.js
+export default {
+  build: {
+    lib: {
+      entry: './src/extension.js',
+      name: 'UserDashboardExtension',
+      formats: ['umd'],
+      fileName: 'index'
+    },
+    rollupOptions: {
+      external: ['vue'],
+      output: {
+        globals: {
+          vue: 'Vue'
+        }
+      }
     }
   }
-];
+}
 ```
 
-#### 架构总览
+## 开发环境调试
 
-![架构总览图](./assets/business-architecture-overview.png)
+设置环境变量进行本地调试：
 
-## 最终方案
+```javascript
+// 设置开发环境标识
+window.ENVIRONMENT_EXT = { env: 'dev' };
+```
 
-### 基础功能(仅支持Vue)
+```vue
+<ExtComponent
+  name="user-dashboard"
+  :checker="checkCondition"
+  dev-url="http://localhost:3000/dist/index.umd.js"
+>
+  <!-- 组件内容 -->
+</ExtComponent>
+```
 
-- umd.js动态加载: [SystemJS](https://github.com/systemjs/systemjs) ✨(改为自己开发的loadScript?)
-- 组件动态渲染: 依赖vue动态组件: `<component :is='Com'>`
-- 数据通信: 依赖vue属性透传
+## 错误处理策略
 
-### 支持多技术栈(React)
+### blockOnError 配置
 
-- React: 使用React语法再实现一遍功能
+```javascript
+// 总是显示错误，阻塞原流程
+blockOnError: true
 
-### 扩展功能
+// 总是走原逻辑，不阻塞
+blockOnError: false
 
-- 跨技术栈(比如非React的主应用加载React前端扩展点): 使用[magic-microservices](https://github.com/bytedance/magic-microservices/blob/main/README-zh_CN.md)
+// 条件性阻塞
+blockOnError: ['特定机构代码'].includes(this.orgCode)
+```
 
-## 针对方案的疑问点
+## 注意事项
 
-- 为什么不适用 `Systemjs`, 而是自己开发umd.js动态加载工具?
+1. **Vue 版本要求**：需要 Vue 2.6+ 版本
+2. **扩展点组件**：必须构建为 UMD 格式
+3. **全局依赖**：扩展点组件可以使用全局的 Vue、第三方库等
+4. **沙箱隔离**：可选开启，提供 JS/CSS 隔离
+5. **错误边界**：组件内置错误处理，确保主应用稳定性
+
+## 相关包
+
+- [@frontendUtils/ext-core](../ext-core) - 扩展点核心逻辑
+- [@frontendUtils/cdn-vue2](../cdn-vue2) - Vue 2 CDN 组件加载器
+- [@frontendUtils/load-script](../load-script) - 脚本加载工具
+
+## 许可证
+
+MIT © xxld0125

@@ -133,7 +133,6 @@ type CheckerType = (conditions: Record<string, string>) => boolean;
 ```typescript
 interface Ext {
   name: string; // 扩展点名称
-  type: 'cdn' | 'iframe' | 'image'; // 扩展点类型
   url: string; // 扩展点地址
   conditions: Record<string, string>; // 条件参数
 }
