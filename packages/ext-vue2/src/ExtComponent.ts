@@ -117,6 +117,7 @@ export default {
           url: this.devUrl,
           conditions: {},
         }
+        this.loading = false;
         return;
       }
 
@@ -139,26 +140,29 @@ export default {
       errorHandler(error);
       this.$emit('error', error);
     },
-    render(this: VueComponent, h: any): any {
-      if (this.hasError) return this.blockOnError ? this.computedError : this.$slots.default;
-      if (this.loading) return this.computedLoading;
-      if (!this.ext) return this.$slots.default;
+  },
+  render(this: VueComponent, h: any): any {
+    console.error('===hasError', this.hasError);
+    console.error('===loading', this.loading);
+    console.error('===ext', this.ext);
+    if (this.hasError) return this.blockOnError ? this.computedError : this.$slots.default;
+    if (this.loading) return this.computedLoading;
+    if (!this.ext) return this.$slots.default;
 
-      return h(CdnComponent, {
-        props: {
-          url: this.ext.url,
-          comProps: this.comProps,
-          comEvents: this.comEvents,
-          exportName: this.exportName,
-          errorHandler: this.errorHandler,
-          loadingHandler: this.loadingHandler,
-        },
-      }, [
-        this.$slots.default && (this.$createElement('div', { slot: 'default' }, Array.isArray(this.$slots.default) ? this.$slots.default : [this.$slots.default])),
-        this.$createElement('div', { slot: 'loading' }, Array.isArray(this.computedLoading) ? this.computedLoading : [this.computedLoading]),
-        this.$createElement('div', { slot: 'error' }, Array.isArray(this.computedError) ? this.computedError : [this.computedError]),
-      ].filter(Boolean))
-    }
+    return h(CdnComponent, {
+      props: {
+        url: this.ext.url,
+        comProps: this.comProps,
+        comEvents: this.comEvents,
+        exportName: this.exportName,
+        errorHandler: this.errorHandler,
+        loadingHandler: this.loadingHandler,
+      },
+    }, [
+      this.$slots.default && (this.$createElement('div', { slot: 'default' }, Array.isArray(this.$slots.default) ? this.$slots.default : [this.$slots.default])),
+      this.$createElement('div', { slot: 'loading' }, Array.isArray(this.computedLoading) ? this.computedLoading : [this.computedLoading]),
+      this.$createElement('div', { slot: 'error' }, Array.isArray(this.computedError) ? this.computedError : [this.computedError]),
+    ].filter(Boolean))
   },
   beforeMount(this: VueComponent): void {
     this.loadExt();

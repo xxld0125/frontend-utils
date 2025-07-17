@@ -1,0 +1,38 @@
+stages:
+  - pack
+
+upload_test:
+  stage: pack
+  image: yunke-registry.cn-hangzhou.cr.aliyuncs.com/yued/node-image-base:v16.13.1-rc
+  script:
+    - npm install -g pnpm --registry=https://registry-npm.myscrm.cn/repository/pkg/
+    - pnpm install --frozen-lockfile --registry https://registry-npm.myscrm.cn/repository/pkg/
+    - yarn upload --force --upload-version "0.0.0-test"
+    - yarn yupdate-env --env test --upload-version "0.0.0-test"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "test"'
+      when: always
+
+upload_release:
+  stage: pack
+  image: yunke-registry.cn-hangzhou.cr.aliyuncs.com/yued/node-image-base:v16.13.1-rc
+  script:
+    - npm install -g pnpm --registry=https://registry-npm.myscrm.cn/repository/pkg/
+    - pnpm install --frozen-lockfile --registry https://registry-npm.myscrm.cn/repository/pkg/
+    - yarn upload --force --tag beta --upload-version "0.0.0-release"
+    - yarn yupdate-env --env release --upload-version "0.0.0-release"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "release"'
+      when: always
+
+upload_master:
+  stage: pack
+  image: yunke-registry.cn-hangzhou.cr.aliyuncs.com/yued/node-image-base:v16.13.1-rc
+  script:
+    - npm install -g pnpm --registry=https://registry-npm.myscrm.cn/repository/pkg/
+    - pnpm install --frozen-lockfile --registry https://registry-npm.myscrm.cn/repository/pkg/
+    - export NEW_VERSION="1.0.0-$(date +%Y-%m-%d-%H-%M)"
+    - yarn upload --tag=beta --upload-version $NEW_VERSION
+    - yarn yupdate-env --env prod --upload-version $NEW_VERSION
+  only:
+      - tags

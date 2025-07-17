@@ -2,17 +2,24 @@
   "name": "@frontendUtils/cdn-vue2",
   "version": "1.0.0",
   "description": "Vue 2 dynamic component loader for CDN resources",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
   "engines": {
     "node": ">=20.12.1"
   },
-  "types": "src/index.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "vite build",
-    "dev": "vite"
+    "build": "rollup -c",
+    "dev": "rollup -c --watch"
   },
-  "keywords": ["vue", "vue2", "cdn", "dynamic", "component", "loader"],
+  "keywords": [
+    "vue",
+    "vue2",
+    "cdn",
+    "dynamic",
+    "component",
+    "loader"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -24,6 +31,16 @@
     "@frontendUtils/cdn-core": "workspace:^"
   },
   "devDependencies": {
-    "vite": "^6.3.5"
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.1",
+    "rollup": "^4.28.1",
+    "rollup-plugin-dts": "^6.1.1",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.0 || ^2.7.0"
   }
 }

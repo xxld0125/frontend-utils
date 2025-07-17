@@ -3,8 +3,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
-    "downlevelIteration": true,
-    "declarationDir": "./"
+    "downlevelIteration": true
   },
   "include": ["src/**/*"],
   "exclude": ["dist"]

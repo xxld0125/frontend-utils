@@ -170,7 +170,6 @@ frontend-utils/
 │       ├── src/
 │       │   ├── ExtComponent.ts # 扩展点组件
 │       │   └── index.ts       # 统一导出
-├── examples/                  # 示例项目
 ├── docs/                      # 文档
 └── DEVELOPMENT_PLAN.md        # 开发计划
 ```

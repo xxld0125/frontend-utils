@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "基于沙箱隔离技术的UMD脚本加载器，提供安全的远程JavaScript脚本动态加载和执行能力",
   "type": "module",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
   "engines": {
     "node": ">=20.12.1"
   },
@@ -14,8 +14,8 @@
     "test:run": "vitest run",
     "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage",
-    "build": "vite build",
-    "dev": "vite"
+    "build": "rollup -c",
+    "dev": "rollup -c --watch"
   },
   "keywords": [
     "umd",
@@ -39,6 +39,13 @@
     "xhr": "^2.6.0"
   },
   "devDependencies": {
-    "vite": "^6.3.5"
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.1",
+    "rollup": "^4.28.1",
+    "rollup-plugin-dts": "^6.1.1",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
   }
 }

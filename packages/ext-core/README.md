@@ -161,7 +161,6 @@ const config = getExtConfig();
 window.ENVIRONMENT_EXT = {
   env: 'dev', // 环境标识
   'ares-ext': 'https://api.example.com/ext', // 扩展点 API 地址
-  'jarvis-node-id': 'your-node-id', // 节点 ID
   gateway: 'https://gateway.example.com' // 网关地址
 };
 ```

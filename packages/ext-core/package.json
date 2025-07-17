@@ -2,15 +2,15 @@
   "name": "@frontendUtils/ext-core",
   "version": "1.0.0",
   "description": "前端扩展点核心库，提供动态扩展点管理、CDN 脚本加载、缓存机制和错误处理等功能",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
   "engines": {
     "node": ">=20.12.1"
   },
-  "types": "src/index.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "vite build",
-    "dev": "vite",
+    "build": "rollup -c",
+    "dev": "rollup -c --watch",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "echo \"暂无测试\" && exit 0",
@@ -50,7 +50,14 @@
     "@frontendUtils/cdn-core": "workspace:^"
   },
   "devDependencies": {
-    "vite": "^7.0.0"
+    "@rollup/plugin-commonjs": "^28.0.1",
+    "@rollup/plugin-json": "^6.1.0",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-typescript": "^12.1.1",
+    "rollup": "^4.28.1",
+    "rollup-plugin-dts": "^6.1.1",
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
   },
   "publishConfig": {
     "access": "public"

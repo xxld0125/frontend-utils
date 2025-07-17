@@ -1,0 +1,68 @@
+{
+  "name": "ext-demo",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build:watch": "yarn build --watch",
+    "serve-dist": "serve --cors dist",
+    "watch-and-serve": "npm-run-all --parallel build:watch serve-dist",
+    "build": "node -e 'console.log(\"📢 主应用提供的依赖要在 /vue.config.js 排除\")' && node scripts/build.js",
+    "upload": "yupload",
+    "build:docs": "vuepress build docs",
+    "uu": "yarn update-and-upload",
+    "preupload": "yarn build",
+    "postbuild": "node scripts/post-build.js",
+    "predev": "node scripts/check-vuepress.js",
+    "update-and-upload": "node scripts/update-version.js && yarn upload",
+    "lint": "vue-cli-service lint",
+    "preinstall": "node scripts/check-pnpm.js",
+    "pnpm:devPreinstall": "npm config set registry https://registry-npm.myscrm.cn/repository/pkg/"
+  },
+  "precommit": "lint",
+  "dependencies": {
+    "core-js": "^3.8.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "@yunke/upload": "^1.0.0",
+    "axios": "^0.27.2",
+    "babel-plugin-regex-to-new": "^1.0.3",
+    "element-ui": "^2.15.8",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "npm-run-all": "^4.1.5",
+    "pre-commit": "^1.2.2",
+    "sass": "^1.51.0",
+    "sass-loader": "^12.6.0",
+    "serve": "^14.0.1",
+    "vue": "^2.6.14",
+    "vue-template-compiler": "^2.6.14"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {},
+    "globals": {
+      "module": true,
+      "require": true
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

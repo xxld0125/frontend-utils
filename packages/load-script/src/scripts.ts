@@ -28,7 +28,6 @@ export async function runScript(url: string, code: string) {
   const sandbox = new Sandbox();
   (rawWindow as any).__EXT_MICRO_APP_PROXY_WINDOW__ = sandbox.proxyWindow;
   code = bindScope(code);
-
   try {
     runCode2Function(code);
   } catch (e: any) {
@@ -53,6 +52,7 @@ export async function runScript(url: string, code: string) {
 // 获取 umd 对象
 export async function runUmdScript(url: string, code: string) {
   const obj = await runScript(url, code);
+  console.error('===runUmdScript', obj);
   if (!obj) return undefined;
 
   const keys = Object.keys(obj);

@@ -86,20 +86,18 @@ class ExtApi {
       }));
   }
 
-  getConfigWithDev(enviroment: any, url: string, jarvisNodeId: string) {
+  getConfigWithDev(enviroment: any, url: string) {
     const { devUseTestApi } = getExtConfig();
     const isUseDev = devUseTestApi && enviroment['env'] === 'dev';
     const gateway = enviroment['gateway'];
     if (isUseDev) {
       return {
         url: url.replace('gateway-dev', 'gateway-test'),
-        'jarvis-node-id': '2',
         gateway: gateway.replace('gateway-dev', 'gateway-test')
       };
     } else {
       return {
         url,
-        jarvisNodeId,
         gateway
       };
     }
@@ -126,11 +124,6 @@ class ExtApi {
       errorMsg = `[@frontendUtils/ext-core ${version}]: 扩展点 url 未配置`;
     }
 
-    // 检查 envId
-    if (!environment['jarvis-node-id']) {
-      errorMsg = `[@frontendUtils/ext-core ${version}]: jarvis-node-id 未配置`;
-    }
-
     // 检查 appGroup 和 appName
     if (!appGroup || !appName) {
       errorMsg = `[@frontendUtils/ext-core ${version}]: 未能成功发起请求，appGroup 当前是 ${appGroup ?? '空'}, appName 当前是 ${appName ?? '空'}，请检查代码确定是否配置这两个参数。`;
@@ -153,13 +146,11 @@ class ExtApi {
       return Promise.resolve({ list: cacheList });
     }
 
-    const config = this.getConfigWithDev(environment, environment['ares-ext'], environment['jarvis-node-id']);
-    const { jarvisNodeId } = config;
+    const config = this.getConfigWithDev(environment, environment['ares-ext']);
     let { url } = config;
 
     const headers = {
       'Content-Type': 'application/json',
-      'Access-Key-Id': `${jarvisNodeId}:${appGroup}:${appName}`
     };
 
     return postData<{ list: ExtOriginType[] }>(url, { type: 2 }, headers).then(res => {
