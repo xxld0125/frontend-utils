@@ -8,7 +8,7 @@ export interface CdnComponentConfig extends Partial<CdnCoreConfigData> {
   loadingFallback?: string | object;
 }
 
-export const startCdnComponent = (options: CdnComponentConfig) => {
+export const startCdnComponent = (options: CdnComponentConfig): void => {
   configObj = options;
   const { baseURL, errorHandler } = options;
   startCdnCore({
@@ -17,4 +17,4 @@ export const startCdnComponent = (options: CdnComponentConfig) => {
   });
 }
 
-export const getConfig = () => configObj;
+export const getConfig = (): CdnComponentConfig => configObj;

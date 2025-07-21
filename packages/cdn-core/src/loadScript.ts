@@ -1,9 +1,7 @@
 import { debug } from './utils';
 import { loadScript } from '@frontendUtils/load-script';
 import { getUrl } from './config';
-
 import { version } from '../package.json';
-
 
 export function systemImport<T = unknown>(path: string, exportName?: string): Promise<T> {
   const url = getUrl(path);
@@ -37,6 +35,7 @@ export function coreLoadScript<T = unknown>(path: string, exportName?: string, e
   }
 
   // 从远程获取
+  // 三次重试
   const request = systemImport<T>(path, exportName)
     .catch(() => systemImport<T>(path, exportName))
     .catch(() => new Promise((resolve) => setTimeout(() => resolve(systemImport<T>(path, exportName)), 100)))
