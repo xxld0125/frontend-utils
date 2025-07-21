@@ -44,10 +44,12 @@ export function extJs<T = any>(options: ExtJsOptions<T>): (...fnOptions: any[]) 
     }
   };
 
+  // 获取扩展点
   return async (...fnOptions: any[]) => {
     try {
-      // 获取扩展点
       let ext: Ext | undefined;
+
+      // 开发环境直接使用 devUrl
       if (devUrl && (window as any)['ENVIRONMENT_EXT']?.['env'] === 'dev') {
         ext = {
           name: 'DEV_URL',
@@ -55,6 +57,7 @@ export function extJs<T = any>(options: ExtJsOptions<T>): (...fnOptions: any[]) 
           conditions: {}
         };
       } else {
+        // 非开发环境通过接口获取扩展点
         ext = await extApi.getExt(name, checker);
       }
 

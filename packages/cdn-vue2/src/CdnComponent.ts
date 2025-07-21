@@ -116,7 +116,7 @@ export default {
           if (typeof res === 'object') {
             this.Com = res;
           } else {
-            throw new Error(`[@frontendUtils/cdn-vue2 ${version}]: 加载的内容数据为 ${typeof res}，不是 Vue 组件 ${String(res)}，\r\n其他信息：url 为 ${this.computedUrl}，exportName 为 ${this.exportName}，解决方案：扩展点开发者，首先确保导出的确实是组件，再确认没问题后，再找架构组人员一起分析问题`);
+            throw new Error(`[@frontendUtils/cdn-vue2 ${version}]: 加载的内容数据为 ${typeof res}，不是 Vue 组件 ${String(res)}，\r\n其他信息：url 为 ${this.computedUrl}，exportName 为 ${this.exportName}`);
           }
         })
         .finally(() => {

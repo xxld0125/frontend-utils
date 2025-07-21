@@ -1,10 +1,5 @@
 export type ErrorHandlerType = (error: any) => void;
 
-export interface globalAssetsType {
-  js?: string[];
-  css?: string[];
-}
-
 export interface CdnCoreConfigData {
   baseURL?: string;
   errorHandler?: ErrorHandlerType;

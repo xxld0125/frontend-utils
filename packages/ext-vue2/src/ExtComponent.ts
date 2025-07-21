@@ -142,9 +142,6 @@ export default {
     },
   },
   render(this: VueComponent, h: any): any {
-    console.error('===hasError', this.hasError);
-    console.error('===loading', this.loading);
-    console.error('===ext', this.ext);
     if (this.hasError) return this.blockOnError ? this.computedError : this.$slots.default;
     if (this.loading) return this.computedLoading;
     if (!this.ext) return this.$slots.default;

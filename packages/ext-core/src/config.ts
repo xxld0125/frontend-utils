@@ -11,8 +11,6 @@ export interface ExtCoreConfigData extends CdnCoreConfigData {
   appGroup?: string;
   // 应用名称
   appName?: string;
-  // 本地开发环境调用测试环境的扩展点接口
-  devUseTestApi?: boolean;
 }
 
 let configData: ExtCoreConfigData = { appGroup: '', appName: '' };

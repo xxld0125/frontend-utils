@@ -14,13 +14,19 @@ export function isBoolean(target: unknown): target is boolean {
 }
 
 // is bind function
-export function isBoundFunction(target: any): boolean {
-  return isFunction(target) && target.name.startsWith('bound ') && !rawHasOwnProperty.call(target, 'prototype');
+export function isBoundFunction(target: unknown): boolean {
+  if (!isFunction(target)) return false;
+  const func = target as { name?: string; prototype?: unknown };
+  return (
+    typeof func.name === 'string' &&
+    func.name.startsWith('bound ') &&
+    !rawHasOwnProperty.call(func, 'prototype')
+  );
 }
 
 // Array deduplication
-export function unique(array: any[]): any[] {
-  return array.filter(function (this: Record<PropertyKey, boolean>, item) {
+export function unique<T extends PropertyKey>(array: T[]): T[] {
+  return array.filter(function (this: Record<T, boolean>, item: T) {
     return item in this ? false : (this[item] = true);
   }, Object.create(null));
 }

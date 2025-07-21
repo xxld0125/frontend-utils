@@ -13,7 +13,6 @@ export type CheckerType = (conditions: Record<string, string>) => boolean;
 interface ExtOriginType {
   type: number;
   interface_method: string;
-  extension_point_type: string;
   condition: Record<string, string>;
   extension_point_url: string;
 }
@@ -63,7 +62,7 @@ class ExtApi {
         await this.doRequest();
       } else {
         const err = new Error(
-          `[@frontendUtils/ext-core ${version}]: 请求扩展点列表接口失败，失败原因 ${error.name} ${error.message}。根本原因：key/secret 配置错误或者缺失`
+          `[@frontendUtils/ext-core ${version}]: 请求扩展点列表接口失败，失败原因 ${error.name} ${error.message}`
         );
         handler(err);
         const cacheList = this.getCache(5);
@@ -84,23 +83,6 @@ class ExtApi {
         url: getUrl(item.extension_point_url),
         conditions: item.condition
       }));
-  }
-
-  getConfigWithDev(enviroment: any, url: string) {
-    const { devUseTestApi } = getExtConfig();
-    const isUseDev = devUseTestApi && enviroment['env'] === 'dev';
-    const gateway = enviroment['gateway'];
-    if (isUseDev) {
-      return {
-        url: url.replace('gateway-dev', 'gateway-test'),
-        gateway: gateway.replace('gateway-dev', 'gateway-test')
-      };
-    } else {
-      return {
-        url,
-        gateway
-      };
-    }
   }
 
   async setRequest(): Promise<{ list: ExtOriginType[] }> {
@@ -137,7 +119,7 @@ class ExtApi {
       throw errorData;
     }
 
-    // 1分钟内不重复请求
+    // 生产环境1分钟内不重复请求
     const env = (window as any)['ENVIRONMENT_EXT']?.['env'];
 
     const cacheList = this.getCache(1);
@@ -146,8 +128,7 @@ class ExtApi {
       return Promise.resolve({ list: cacheList });
     }
 
-    const config = this.getConfigWithDev(environment, environment['ares-ext']);
-    let { url } = config;
+    const url = environment['ares-ext'];
 
     const headers = {
       'Content-Type': 'application/json',

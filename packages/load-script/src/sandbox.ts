@@ -189,7 +189,7 @@ export default class Sandbox {
        * 返回所有属性名的合并结果
        */
       ownKeys: (target: microAppWindowType): Array<string | symbol> =>
-        unique(Reflect.ownKeys(rawWindow).concat(Reflect.ownKeys(target))),
+        unique<string | symbol>(Reflect.ownKeys(rawWindow).concat(Reflect.ownKeys(target))),
 
       /**
        * 拦截 delete 操作
