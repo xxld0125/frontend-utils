@@ -1,0 +1,38 @@
+{
+  "name": "@frontendUtils/ext-wc-vue2",
+  "version": "1.0.0",
+  "description": "Vue2 技术栈的 Web Components 扩展点组件",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "keywords": [
+    "vue",
+    "vue2",
+    "vue3",
+    "web-components",
+    "micro-frontend",
+    "extension-point"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "build:watch": "rollup -c -w",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean"
+  },
+  "dependencies": {
+    "@frontendUtils/ext-vue2": "workspace:^",
+    "@magic-microservices/magic": "^1.1.3"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "rollup": "^4.9.4",
+    "rollup-plugin-dts": "^6.1.0",
+    "typescript": "^5.3.3"
+  }
+}
