@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     测试项目
-    <ext-component name="demo" :checker="checker" :blockOnError="false" :exportName="exportName" :dev-url="devUrl" />
+    <ext-component name="ext-demo" :checker="checker" :blockOnError="false" :exportName="exportName">
+      原组件
+    </ext-component>
   </div>
 </template>
 
@@ -15,40 +17,34 @@ export default {
   data() {
     return {
       exportName: 'HelloWorld',
-      devUrl: 'http://localhost:3000/index.umd.js',
     };
   },
   created() {
     window.ENVIRONMENT_EXT = {
       env: 'dev',
+      'ares-ext': 'http://localhost:3000/ext-list',
+      env: 'dev'
     };
     extApp({
       appGroup: 'kefu',
       appName: 'kefu-kffrontend',
     });
-
-    console.error('==extJs', extJs);
   },
   async mounted() {
-    console.time('extHandler');
-    const res = await this.extHandler({
+    await this.extHandler({
       name: '张三',
       age: 18,
     });
-
-    console.error('===res', res);
-    console.timeEnd('extHandler');
   },
   methods: {
     checker() {
-      return false;
+      return true;
     },
     async extHandler(data) {
       const fn = extJs({
-        name: 'demo',
+        name: 'ext-demo',
         exportName: 'extFn',
         checker: this.checker,
-        devUrl: 'http://localhost:3000/index.umd.js',
         originFn: (data) => {
           console.error('====originFn', data);
         },
