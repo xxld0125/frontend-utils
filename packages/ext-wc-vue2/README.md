@@ -4,12 +4,12 @@ Vue2 技术栈的 Web Components 扩展点组件库。基于 [@magic-microservic
 
 ## 特性
 
-✨ **跨框架兼容**: 将 Vue2 组件封装为 Web Components，可在任何前端框架中使用  
-🔄 **动态加载**: 支持运行时动态加载扩展点组件  
-🎯 **插槽支持**: 完整支持 Vue2 插槽系统  
-🛡️ **错误处理**: 内置错误捕获和处理机制  
-⚡ **性能优化**: 防抖处理、懒加载等性能优化  
-🎨 **样式隔离**: 支持 Shadow DOM 样式隔离  
+✨ **跨框架兼容**: 将 Vue2 组件封装为 Web Components，可在任何前端框架中使用
+🔄 **动态加载**: 支持运行时动态加载扩展点组件
+🎯 **插槽支持**: 完整支持 Vue2 插槽系统
+🛡️ **错误处理**: 内置错误捕获和处理机制
+⚡ **性能优化**: 防抖处理、懒加载等性能优化
+🎨 **样式隔离**: 支持 Shadow DOM 样式隔离
 
 ## 安装
 
@@ -36,24 +36,24 @@ npm install @frontendUtils/ext-wc-vue2
 ### 2. 使用 Web Component
 
 ```html
-<ext-component 
+<ext-component
   name="my-extension"
   export-name="MyComponent"
   dev-url="http://localhost:3000/my-component.js">
-  
+
   <!-- 默认插槽 -->
   <div>默认内容</div>
-  
+
   <!-- loading 插槽 -->
   <div slot="loading">
     <div class="spinner">加载中...</div>
   </div>
-  
+
   <!-- error 插槽 -->
   <div slot="error">
     <div class="error">加载失败</div>
   </div>
-  
+
 </ext-component>
 ```
 
@@ -105,7 +105,7 @@ npm install @frontendUtils/ext-wc-vue2
   <script src="https://unpkg.com/@frontendUtils/ext-wc-vue2/dist/index.umd.js"></script>
 </head>
 <body>
-  <ext-component 
+  <ext-component
     name="user-profile"
     export-name="UserProfile"
     dev-url="http://localhost:3000/user-profile.js">
@@ -118,7 +118,7 @@ npm install @frontendUtils/ext-wc-vue2
 ### 传递属性
 
 ```html
-<ext-component 
+<ext-component
   name="data-table"
   export-name="DataTable"
   com-props='{"columns": ["name", "age"], "data": [{"name": "张三", "age": 25}]}'
@@ -129,21 +129,21 @@ npm install @frontendUtils/ext-wc-vue2
 ### 自定义加载和错误处理
 
 ```html
-<ext-component 
+<ext-component
   name="chart-component"
   export-name="ChartComponent"
   dev-url="http://localhost:3000/chart.js"
   error-handler="handleChartError"
   loading-handler="handleChartLoading">
-  
+
   <div slot="loading">
     <div class="loading-spinner">图表加载中...</div>
   </div>
-  
+
   <div slot="error">
     <div class="error-message">图表加载失败，请稍后重试</div>
   </div>
-  
+
 </ext-component>
 
 <script>
@@ -162,7 +162,7 @@ function handleChartLoading(isLoading) {
 ### 样式定制
 
 ```html
-<ext-component 
+<ext-component
   name="custom-button"
   export-name="CustomButton"
   class-name="my-button"
@@ -295,4 +295,4 @@ A: 确保：
 
 ## 许可证
 
-MIT License - 详见 [LICENSE](./LICENSE) 文件 
+MIT License - 详见 [LICENSE](./LICENSE) 文件

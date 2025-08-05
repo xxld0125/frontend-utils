@@ -18,7 +18,6 @@
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "prettier": "^3.5.3",
-    "vue-template-compiler": "^2.6.14",
-    "@frontendUtils/ext-vue2": "workspace:^"
+    "vue-template-compiler": "^2.6.14"
   }
 }

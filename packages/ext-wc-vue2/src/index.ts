@@ -45,22 +45,9 @@ function registerWebComponent() {
 // 立即注册
 registerWebComponent();
 
-const ExtWcVue2 = {
-  useProps,
-  extApp,
-  extJs,
-  registerWebComponent, // 提供手动注册方法
-};
-
-// 全局暴露
-if (typeof window !== 'undefined') {
-  window.ExtWcVue2 = ExtWcVue2;
-}
-
-export default ExtWcVue2;
 export {
   useProps,
   extApp,
   extJs,
-  registerWebComponent
 };
+

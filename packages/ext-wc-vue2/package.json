@@ -17,6 +17,7 @@
     "micro-frontend",
     "extension-point"
   ],
+  "license": "MIT",
   "scripts": {
     "build": "rollup -c",
     "build:watch": "rollup -c -w",

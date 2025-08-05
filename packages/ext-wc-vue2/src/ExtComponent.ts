@@ -90,9 +90,6 @@ export const App: Module = {
   mount: debounce(function (container: ExtendedElement, props: any, magicInstance: HTMLElement) {
     const { props: vueProps, slots } = getVueAppConfig(container, props, magicInstance);
 
-    // Angular 兼容：如果 checker 是字符串，则不渲染
-    if (typeof vueProps.checker === 'string') return;
-
     try {
       const vueInstance = new Vue({
         render(h: any) {
